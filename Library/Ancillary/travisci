@@ -15,7 +15,7 @@
 
 INSTALL_PREFIX="${HOME}/.local"
 
-eval $(opam config env)
+eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
 autoconf
 ./configure --prefix="${INSTALL_PREFIX}"
 bmake -I "${INSTALL_PREFIX}/share/bsdowl" all

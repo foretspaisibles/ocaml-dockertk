@@ -6,6 +6,9 @@ license: "CeCILL-B"
 homepage: "https://github.com/michipili/dockertk"
 bug-reports: "https://github.com/michipili/dockertk/issues"
 dev-repo: "https://github.com/michipili/dockertk.git"
+available: [
+  ocaml-version >= "4.02.1"
+]
 tags: [
   "docker"
 ]
