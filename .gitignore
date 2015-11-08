@@ -1,0 +1,9 @@
+#
+# Autoconf files
+#
+autom4te.cache/
+config.log
+config.status
+configure
+Makefile.config
+.product
