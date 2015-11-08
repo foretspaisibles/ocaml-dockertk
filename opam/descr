@@ -1,0 +1,6 @@
+This addresses a few shortcomings of the base **docker** toolkit.  As
+this technology currently enjoys a growing user base, I hope that this
+toolkit will be helpful to many.  This *missing Docker Toolkit*
+currently provides a flexible garbage collector.
+
+WWW: https://github.com/michipili/dockertk

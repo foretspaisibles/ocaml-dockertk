@@ -6,4 +6,7 @@ config.log
 config.status
 configure
 Makefile.config
+Makefile.local
 .product
+.ocamlinit
+.merlin

@@ -65,7 +65,7 @@ Here is an example configuraiton file, to be saved in
 
 Dandling                            : Delete
 Not(Age(3))                         : PreserveAll
-Repository("organisation/image")    : PreserveRecent(3)
+Repository("organisation/repo")     : PreserveRecent(3)
 True                                : Delete
 ```
 

@@ -1,0 +1,36 @@
+opam-version: "1.2"
+version: "0.1.0"
+maintainer: "michipili@gmail.com"
+authors: "Michael Grünewald"
+license: "CeCILL-B"
+homepage: "https://github.com/michipili/dockertk"
+bug-reports: "https://github.com/michipili/dockertk/issues"
+dev-repo: "https://github.com/michipili/dockertk.git"
+tags: [
+  "docker"
+]
+build: [
+  ["./configure" "--prefix" prefix]
+  ["bmake" "-I%{bsdowl:share}%" "all"] {os != "freebsd"}
+  ["make"  "-I%{bsdowl:share}%" "all"] {os  = "freebsd"}
+]
+install: [
+  ["bmake" "-I%{bsdowl:share}%" "install"] {os != "freebsd"}
+  ["make"  "-I%{bsdowl:share}%" "install"] {os  = "freebsd"}
+]
+remove: [
+  ["ocamlfind" "remove" "dockertk"]
+  ["rm" "-rf" "%{share}%/doc/dockertk"]
+]
+depends: [
+  "bsdowl"      {>= "3.0.0"}
+  "gasoline"    {>= "0.4.0"}
+  "lemonade"    {>= "0.3.0"}
+  "ocamlfind"
+  "rashell"     {>= "0.2.0"}
+]
+depexts: [
+  [["debian"] ["bmake"]]
+  [["ubuntu"] ["bmake"]]
+  [["osx" "macports"] ["bmake"]]
+]

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+### travisci -- Continuous integration test for travis
+
+# Docker Toolkit (https://github.com/michipili/dockertk)
+# This file is part of Docker Toolkit
+#
+# Copyright © 2015 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+INSTALL_PREFIX="${HOME}/.local"
+
+eval $(opam config env)
+autoconf
+./configure --prefix="${INSTALL_PREFIX}"
+bmake -I "${INSTALL_PREFIX}/share/bsdowl" all
+bmake -I "${INSTALL_PREFIX}/share/bsdowl" install
+
+### End of file `travisci'

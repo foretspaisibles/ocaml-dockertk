@@ -1,0 +1,21 @@
+(* Compile-time configuration *)
+
+let ( / ) =
+  Filename.concat
+
+let ac_package = "@PACKAGE@"
+let ac_dir_prefix = "@prefix@"
+let ac_dir_exec_prefix = "@exec_prefix@"
+let ac_dir_bindir = "@bindir@"
+let ac_dir_sbindir = "@sbindir@"
+let ac_dir_libexecdir = "@libexecdir@" / ac_package
+let ac_dir_datarootdir = "@datarootdir@"
+let ac_dir_datadir = "@datarootdir@"/ ac_package
+let ac_dir_sysconfdir = "@sysconfdir@"
+let ac_dir_sharedstatedir = "@sharedstatedir@" / ac_package
+let ac_dir_localstatedir = "@localstatedir@" / ac_package
+let ac_dir_runstatedir = "@runstatedir@" / ac_package
+let ac_dir_docdir = "@docdir@"
+let ac_dir_infodir = "@infodir@"
+let ac_dir_libdir = "@libdir@"
+let ac_dir_localedir = "@localedir@"

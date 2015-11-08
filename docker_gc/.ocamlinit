@@ -1,0 +1,8 @@
+#use "topfind";;
+#require "str";;
+#require "mixture";;
+#require "atdgen";;
+#directory "/Users/michael/obj/Workshop/dockertk/docker_gc";;
+#load "dockerGc_Policy_t.cmo";;
+#load "dockerGc_Policy_j.cmo";;
+#load "dockerGc_Policy.cmo";;
