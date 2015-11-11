@@ -172,11 +172,11 @@ let failwith_arity s =
 let rec predicate_entry cont =
   function
   | [] -> failwith "DockerGc_Policy.parser: Unexpected end of input."
-  | TRUE :: [] -> True
-  | FALSE :: [] -> False
-  | AGE :: LPAREN :: INTEGER(n) :: RPAREN :: [] -> Age(n)
-  | REPOSITORY :: LPAREN :: IDENT(s) :: RPAREN :: [] -> Repository(s)
-  | DANDLING :: [] -> Dandling
+  | TRUE :: [] -> cont True
+  | FALSE :: [] -> cont False
+  | AGE :: LPAREN :: INTEGER(n) :: RPAREN :: [] -> cont (Age(n))
+  | REPOSITORY :: LPAREN :: IDENT(s) :: RPAREN :: [] -> cont (Repository(s))
+  | DANDLING :: [] -> cont Dandling
   | NOT :: LPAREN :: tl ->
       (match read_argv tl with
        | [a] -> cont (predicate_entry (fun x -> Not(x)) a)

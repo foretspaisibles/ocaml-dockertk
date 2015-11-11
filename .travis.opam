@@ -1,5 +1,4 @@
 compiler:
-  - 4.01.0
   - 4.02.3
 repository:
   - atdgen
@@ -7,3 +6,7 @@ repository:
   - ocamlfind
   - lwt
   - mixture
+git:
+  - https://github.com/michipili/lemonade.git
+  - https://github.com/michipili/rashell.git
+  - https://github.com/michipili/gasoline.git
