@@ -209,7 +209,7 @@ let plan policy env =
 let exec plan =
   Lwt.catch
     (fun () -> Rashell_Docker.rmi
-        (filtermap (fun (id, _, flag) -> if flag then Some(id) else None) plan))
+        (filtermap (fun (id, _, flag) -> if flag then None else Some(id)) plan))
     (function
       | Rashell_Command.Error(cmd, Unix.WEXITED 1, mesg) ->
           Lwt.fail_with mesg

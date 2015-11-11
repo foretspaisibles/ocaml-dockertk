@@ -46,7 +46,7 @@ let plan lst =
 
 let exec plan =
   Lwt.catch
-    (fun () -> Rashell_Docker.rmi
+    (fun () -> Rashell_Docker.rm
         (filtermap (fun (id, _, flag) -> if flag then None else Some(id)) plan))
     (function
       | Rashell_Command.Error(cmd, Unix.WEXITED 1, mesg) ->
