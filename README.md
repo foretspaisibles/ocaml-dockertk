@@ -81,10 +81,12 @@ distribution.
 
 ## Setup guide
 
-It is easy to install the **missing Docker Toolkit** using **opam**
-and its *pinning* feature.  In a shell visiting the repository, say
+The **missing Docker Toolkit** is written in [ocaml](ocaml-home) and
+it is easy to install using **opam** and its *pinning* feature.  In a
+shell visiting the repository, say
 
 ```console
+% autoconf
 % opam pin add dockertk .
 ```
 
@@ -133,4 +135,5 @@ Michael Grünewald in Schwerin, on November 8, 2015
   [bsdowl-home]:        https://github.com/michipili/bsdowl
   [bsdowl-install]:     https://github.com/michipili/bsdowl/wiki/Install
   [lemonade-home]:      https://github.com/michipili/lemonade
+  [ocaml-home]:         https://github.com/ocaml/ocaml
   [rashell-home]:       https://github.com/michipili/rashell
