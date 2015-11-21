@@ -26,6 +26,12 @@ EXTERNAL+=      ocaml.findlib:str
 CONFIGURE+=     Makefile.config.in
 CONFIGURE+=     docker_gc/dockerGc_Configuration.ml.in
 
+docker-image:
+	docker build\
+	 -t dockertk\
+	 -f ${.CURDIR}/Library/docker/Dockerfile\
+	 ${.CURDIR}
+
 .include "generic.project.mk"
 
 ### End of file `Makefile'
