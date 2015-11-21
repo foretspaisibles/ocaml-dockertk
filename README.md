@@ -81,12 +81,22 @@ distribution.
 
 ## Setup guide
 
+We describe three methods to setup **the missing Docker Toolkit**,
+using **opam**, performing a manual install or building a **docker
+image**.
+
+
+### Setup with opam
+
 It is easy to install the **missing Docker Toolkit** using **opam**
 and its *pinning* feature.  In a shell visiting the repository, say
 
 ```console
 % opam pin add dockertk .
 ```
+
+
+### Setup manually
 
 It is also possible to install the **missing Docker Toolkit**
 manually.  The installation procedure is based on the portable build
@@ -122,6 +132,31 @@ The **GNU Make** program usually give up the ghost, croaking
 **BSD Make**.
 
 Step 7 requires that you can `su -` if you are not already `root`.
+
+
+### Setup with docker
+
+To prepare a docker image, issue the folloing command in a shell
+visiting a working copy of the repository:
+
+```console
+% docker build -t dockertk -f Library/docker/Dockerfile .
+```
+
+This prepares a `dockertk` image containing the programs found in this
+repository.  To run the `docker_gc` program, please install the
+wrapper script in `Library/docker/docker_gc.sh` in your personal path,
+or wherever seems appropriate:
+
+```console
+% install -d "${HOME}/bin"
+% install -m 750 Library/docker/docker_gc.sh "${HOME}/bin"
+```
+
+The script assumes that the environment variables *DOCKER_TLS_VERIFY*,
+*DOCKER_HOST* and *DOCKER_CERT_PATH* convey docker configuration.  If
+your setting differ, you may need to edit that script.  If you are
+stuck, please open an issue in the issue tracker.
 
 
 Michael Grünewald in Schwerin, on November 8, 2015
