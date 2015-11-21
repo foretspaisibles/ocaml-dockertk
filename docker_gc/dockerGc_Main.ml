@@ -92,16 +92,28 @@ struct
       >>= fun () -> Lwt.return plan
     in
     let containers () =
+      let exec =
+        if Configuration.dry_run () then
+          Lwt.wrap1 ignore
+        else
+          DockerGc_Container.exec
+      in
       DockerGc_Container.list ()
       >|= DockerGc_Container.plan
       >>= snoop
-      >>= DockerGc_Container.exec
+      >>= exec
     in
     let images () =
+      let exec =
+        if Configuration.dry_run () then
+          Lwt.wrap1 ignore
+        else
+          DockerGc_Image.exec
+      in
       DockerGc_Image.list ()
       >|= DockerGc_Image.plan policy
       >>= snoop
-      >>= DockerGc_Image.exec
+      >>= exec
     in
     containers () >>= images
 end

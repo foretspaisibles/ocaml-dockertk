@@ -12,7 +12,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 PACKAGE=	dockertk
-VERSION=	0.1.1
+VERSION=	0.2.0
 OFFICER=	michipili@gmail.com
 
 MODULE=		ocaml.prog:docker_gc
@@ -25,6 +25,12 @@ EXTERNAL+=      ocaml.findlib:str
 
 CONFIGURE+=     Makefile.config.in
 CONFIGURE+=     docker_gc/dockerGc_Configuration.ml.in
+
+docker-image:
+	docker build\
+	 -t dockertk\
+	 -f ${.CURDIR}/Library/docker/Dockerfile\
+	 ${.CURDIR}
 
 .include "generic.project.mk"
 
