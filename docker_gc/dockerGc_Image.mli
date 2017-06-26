@@ -17,6 +17,9 @@ type image = Rashell_Docker_t.image
 type image_id = string
 (** The type of image ids. *)
 
+type image_ref = string
+(** The type of image reference, either an image id or repository:tag name. *)
+
 type repository = string
 (** The type of image repositories. *)
 
@@ -38,10 +41,10 @@ type predicate = DockerGc_Policy.predicate
 val list : unit -> (image_id * description) list Lwt.t
 (** Return the contents of the local images library. *)
 
-val plan : policy -> (image_id * description) list -> (image_id * string * bool) list
+val plan : policy -> (image_id * description) list -> (description * string * bool) list
 (** Apply the policy to some library contents.  The result mentions
     each leaf image id, the predicate that matched it, and if the image is
     to be preserved. *)
 
-val exec : (image_id * string * bool) list -> unit Lwt.t
+val exec : (description * string * bool) list -> unit Lwt.t
 (** Apply the given plan by removing marked images. *)

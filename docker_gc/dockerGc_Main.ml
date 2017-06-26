@@ -77,18 +77,18 @@ struct
   end
 
   let process policy =
-    let log_plan =
+    let log_plan item_to_string =
       if Configuration.verbose () then
-        (fun (id, reason, preserve) ->
+        (fun (item, reason, preserve) ->
            Lwt_io.eprintf "%8s %s %s\n"
              (if preserve then "Preserve" else "Delete")
-             id
+             (item_to_string item)
              reason)
       else
         (fun _ -> Lwt.return_unit)
     in
-    let snoop plan =
-      Lwt_list.iter_s log_plan plan
+    let snoop item_to_string plan =
+      Lwt_list.iter_s (log_plan item_to_string) plan
       >>= fun () -> Lwt.return plan
     in
     let containers () =
@@ -100,7 +100,7 @@ struct
       in
       DockerGc_Container.list ()
       >|= DockerGc_Container.plan
-      >>= snoop
+      >>= snoop (fun containerid -> containerid)
       >>= exec
     in
     let images () =
@@ -112,7 +112,7 @@ struct
       in
       DockerGc_Image.list ()
       >|= DockerGc_Image.plan policy
-      >>= snoop
+      >>= snoop (fun description -> description.DockerGc_Image.image.Rashell_Docker_t.image_id)
       >>= exec
     in
     containers () >>= images

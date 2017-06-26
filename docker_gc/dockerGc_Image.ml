@@ -19,6 +19,8 @@ type image = Rashell_Docker_t.image
 
 type image_id = string
 
+type image_ref = string
+
 type repository = string
 
 type tag = string
@@ -59,7 +61,7 @@ struct
   let _program_start =
     Unix.gettimeofday ()
 
-  let _lookup imageid env =
+  let _lookup imageid env  =
     try List.assoc imageid env
     with Not_found -> failwith (imageid^": Image not found.")
 
@@ -127,6 +129,9 @@ struct
 
   let select ids action =
     _select ids action <$> read
+
+  let description imageid =
+    _lookup imageid <$> read
 end
 
 let list () =
@@ -192,24 +197,37 @@ let plan_interpret ax =
     (fun (ids, reason, preserve, seen) ->
        StringPool.elements (StringPool.diff ids seen), reason, preserve)
     (fst ax)
-  |> List.map (fun (ids, reason, preserve) -> List.map (fun x -> (x,reason,preserve)) ids)
+  |> List.map
+    (fun (ids, reason, preserve) -> List.map
+        (fun x ->
+           LibraryReader.bind
+             (LibraryReader.description x)
+             (fun descr -> LibraryReader.return (descr, reason, preserve)))
+        ids)
   |> List.concat
+  |> LibraryReader.dist
 
 let plan policy env =
   let open LibraryReader.Infix in
-  let ( >|= ) m f = LibraryReader.map f m in
   let prog =
     LibraryReader.leaves
     >>= plan_predicate_matching policy
     >>= List.fold_left plan_integrate (LibraryReader.return ([], StringPool.empty))
-    >|= plan_interpret
+    >>= plan_interpret
   in
   LibraryReader.run env prog
 
+let rmi descr =
+  let image_refs =
+    match descr.name with
+    | [] -> [descr.image.Rashell_Docker_t.image_id]
+    | lst -> List.map (fun (repository, tag) -> repository ^ ":" ^ tag) lst
+  in
+  Rashell_Docker.rmi image_refs
+
 let exec plan =
   Lwt.catch
-    (fun () -> Rashell_Docker.rmi
-        (filtermap (fun (id, _, flag) -> if flag then None else Some(id)) plan))
+    (fun () -> Lwt_list.iter_s rmi (filtermap (fun (descr, _, flag) -> if flag then None else Some(descr)) plan))
     (function
       | Rashell_Command.Error(cmd, Unix.WEXITED 1, mesg) ->
           Lwt.fail_with mesg
